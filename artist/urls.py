@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import ArtistSongsView
+from .views import ArtistView, MusicView
 
+# URL Routing
 urlpatterns = [
-    path('songs/', ArtistSongsView.as_view(), name='create_song'),
-    path('songs/<int:artist_id>/', ArtistSongsView.as_view(), name='list_songs'),  # Ensure artist_id is in the URL
-    path('songs/update/<int:music_id>/', ArtistSongsView.as_view(), name='update_song'),
-    path('songs/delete/<int:music_id>/', ArtistSongsView.as_view(), name='delete_song'),
+    path('artists/', ArtistView.as_view(), name='artist-list'),
+    path('artists/<int:artist_id>/', ArtistView.as_view(), name='artist-detail'),
+    path('music/', MusicView.as_view(), name='music-list'),
+    path('music/<int:music_id>/', MusicView.as_view(), name='music-detail'),
 ]

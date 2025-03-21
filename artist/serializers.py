@@ -1,12 +1,16 @@
 from rest_framework import serializers
-
+# Artist Serializer
 class ArtistSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
-    dob = serializers.DateTimeField()
+    dob = serializers.DateTimeField(required=False)
     gender = serializers.ChoiceField(choices=['m', 'g', 'o'])
-    address = serializers.CharField(max_length=255)
-    first_release_year = serializers.DateField()
-    no_of_albums_released = serializers.IntegerField()
-    created_at = serializers.DateTimeField(read_only=True)
-    updated_at = serializers.DateTimeField(read_only=True)
+    address = serializers.CharField(max_length=255, required=False)
+    first_release_year = serializers.DateField(required=False)
+    no_of_albums_released = serializers.IntegerField(required=False)
+
+# Music Serializer
+class MusicSerializer(serializers.Serializer):
+    artist_id = serializers.IntegerField()
+    title = serializers.CharField(max_length=255)
+    album_name = serializers.CharField(max_length=255)
+    genre = serializers.ChoiceField(choices=['rnb', 'country', 'classic', 'rock', 'jazz'])
