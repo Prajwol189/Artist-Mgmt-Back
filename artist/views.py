@@ -58,9 +58,9 @@ class MusicView(APIView):
             data = serializer.validated_data
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    INSERT INTO music (artist_id, title, album_name, genre)
+                    INSERT INTO music (artist_id, title, album_id, genre)
                     VALUES (%s, %s, %s, %s) RETURNING id
-                """, [data['artist_id'], data['title'], data['album_name'], data['genre']])
+                """, [data['artist_id'], data['title'], data['album_id'], data['genre']])
                 music_id = cursor.fetchone()[0]
             return Response({"message": "Music created", "id": music_id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -75,6 +75,7 @@ class MusicView(APIView):
                 cursor.execute(f"UPDATE music SET {update_fields}, updated_at = CURRENT_TIMESTAMP WHERE id = %s", values)
             return Response({"message": "Music updated"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, music_id):
         with connection.cursor() as cursor:
