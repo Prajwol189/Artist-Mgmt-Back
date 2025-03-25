@@ -7,7 +7,11 @@ from .serializers import AlbumSerializer
 class AlbumView(APIView):
     def get(self, request):
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM album")
+            # Update the SQL query to include artist_id
+            cursor.execute("""
+                SELECT album.id, album.name, album.release_date, album.artist_id
+                FROM album
+            """)
             columns = [col[0] for col in cursor.description]
             albums = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
